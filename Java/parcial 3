@@ -1,0 +1,164 @@
+// Erick Vargas, Estudiante de Bioingenieria de la Pontificia Universidad Javeriana
+// Programacion Avanzada, parcial 3
+
+//a. En el contexto de la construcción de un modelo de aprendizaje automático, desarrolle una clase abstracta llamada Modelo que tiene como atributos el nombre (String) y el número de parámetros (int). Debe tener un constructor que permita inicializar sus atributos y un método abstracto llamado entrenar de tipo void.
+//Iniciamos creando la clase abstracta
+public abstract class Modelo {
+    // Creamos los dos atributos
+    private String nombre;
+    private int parametros;
+    //Creamos el constrcutor
+    public Modelo(String nombre, int parametros){
+        //inicializamos los atributos
+        this.nombre=nombre;
+        this.parametros=parametros;
+    }
+    // Creamos el metodo abstracto 
+    public abstract void entrenar(){
+        
+    }
+    // getter y setter para nombre
+    public String getnombre(){
+        return nombre;
+    } 
+    public void setnombre(String nombre){
+        this.nombre=nombre;
+    }
+    // getter y setter para parametros
+    public int getparametros(){
+        return parametros;
+    }
+    public void setparametros(int parametros){
+        this.parametros=parametros;
+    }
+}
+//b. Diseñe una clase llamada ModeloLineal hija de Modelo que tiene como atributos adicionales el coeficiente de correlación (double) y el error cuadrático medio (double). Debe tener un método constructor que permita inicializar sus atributos y los del padre. Sobreescribe el método entrenar el cual muestra por pantalla el proceso de entrenamiento de un modelo lineal de esta manera:
+
+//Entrenando modelo lineal: <nombre>
+//Número de parámetros: <parámetros>
+//Coeficiente de correlación inicial: <coeficiente>
+//Error cuadrático medio inicial: <error>
+//Entrenamiento completado.
+// creamos la clase hija
+public class ModeloLineal extends Modelo{
+    //añadimos los nuevos parametros
+    private double coeficiente;
+    private double error;
+    //creamos el nuevo constructor y nombramos los antiguos atributos (herencia)
+    public ModeloLineal (double coeficiente, double error, String nombre, int parametros){
+        // utilizamos "super" para hacer la herencia de los antiguos atributos
+        super(nombre,parametros);
+        //Iniciallizamos los atributos nuevos
+        this.coeficiente=coeficiente;
+        this.error=error;
+    }
+    // getter y setter para coeficiente
+    public double getcoeficiente(){
+        return coeficiente;
+    } 
+    public void setcoeficiente(double coeficiente){
+        this.nombre=nombre;
+    }
+    // getter y setter para error
+    public double geterror(){
+        return error;
+    }
+    public void seterror(double error){
+        this.error=error;
+    }
+}
+//c. Diseñe una clase llamada ModeloArbolDecision hija de Modelo que tiene como atributos adicionales la profundidad del árbol (int) y la cantidad de nodos hoja (int). La clase ModeloArbolDecision debe tener también un constructor que permite inicializar sus atributos y los del padre. Sobreescribe el método entrenar para que muestre por pantalla la información del entrenamiento del modelo de árbol de decisión así:
+
+//Entrenando modelo de árbol de decisión: <nombre>
+//Número de parámetros: <parámetros>
+//Profundidad del árbol: <profundidad>
+//Número de nodos hoja: <nodos hoja>
+//Entrenamiento completado.
+// creamos la clase hija
+public class ModeloArbolDesicion extends Modelo{
+    //añadimos los nuevos parametros
+    private int arbol;
+    private int hoja;
+    //creamos el nuevo constructor y nombramos los antiguos atributos (herencia)
+    public ModeloArbolDesicion (int arbol,int hoja String nombre, int parametros){
+        // utilizamos "super" para hacer la herencia de los antiguos atributos
+        super(nombre,parametros);
+        //Iniciallizamos los atributos nuevos
+        this.arbol=arbol;
+        this.hoja=hoja;
+    }
+    // getter y setter para arbol
+    public int getarbol(){
+        return arbol;
+    } 
+    public void setarbol(int arbol){
+        this.arbol=arbol;
+    }
+    // getter y setter para hoja
+    public double gethoja(){
+        return hoja;
+    }
+    public void sethoja(int hoja){
+        this.hoja}=hoja;
+    }
+}
+//d.En el main de una aplicación en consola construya una lista de Modelos (objetos de tipo ModeloLineal y ModeloArbolDecision, en la misma lista puede haber objetos de los dos tipos). Construya por lo menos un objeto de cada tipo. Y en el mismo método del main desarrolle un ciclo que muestre por pantalla el proceso de entrenamiento de cada modelo usando el método entrenar de cada clase. En este punto debe utilizar polimorfismo para la lista de Modelos y para entrenar los modelos.
+//inicmaos importando las librerias
+import java.util.ArrayList;
+import java.util.List;
+// Creamos la clase principal 
+public class Main {
+    // la Iniciamos
+    public static void main(String[] args) {
+        // creamos la lista que tenga los datos de Modelo y la llamaremos listaModelo
+        List<Modelo> listaModelo = new ArrayList<>();
+
+        // Crear objetos de tipo ModeloLineal y ModeloArbolDecision
+        ModeloLineal modeloLineal = new ModeloLineal;
+        ModeloArbolDecision modeloArbolDecision = new ModeloArbolDecision;
+
+        // Agregar los objetos a la lista de Modelos
+        listaModelo.add(ModeloLineal);
+        listaModelo.add(modeloArbolDecision);
+
+        // Entrenar cada modelo de la lista
+        for (Modelo modelo : listaModelos) {
+            modelo.entrenar();
+        }
+    }
+}
+// Desarrolle una clase llamada Validador que tenga un método llamado validarModelo. Este método debe recibir un objeto de la clase Modelo, ejecutar el método entrenar del modelo, y luego imprimir un mensaje que indique si el modelo es válido o no. Un modelo se considera válido si cumple las siguientes condiciones:
+//Para los modelos lineales, el coeficiente de correlación debe ser superior a 0.8 y el error cuadrático medio debe ser inferior a 0.2.
+//Para los modelos de árbol de decisión, la profundidad del árbol debe ser inferior a 10 y el número de nodos hoja debe ser superior a 5.
+//El método debe imprimir el siguiente mensaje si el modelo es válido:
+//El modelo <nombre> ha pasado la validación.
+//Y el siguiente mensaje si el modelo no es válido:
+//El modelo <nombre> no ha pasado la validación.
+// creamos la clase Validador
+public class Validador {
+    // creamos un constructor y le asignamos la variable Modelo
+    public void validarModelo(Modelo modelo) {
+        modelo.entrenar();
+        // utilizamos el operador instaceeof para ver si esta en la lista
+        if (modelo instanceof ModeloLineal) {
+            // le asignamos una variable
+            ModeloLineal modeloLineal = (ModeloLineal) modelo;
+            // hacemos la IF para la condicion 
+            // y utilizamos && para hacer la union de las condiciones
+            if (modeloLineal.getCoeficienteConsecuencias() > 0.8 && modeloLineal.getErrorCuadraticoMedio() < 0.2) {
+                System.out.println("El modelo " + modelo.getNombre() + " ha pasado la validación.");
+            } else {
+                System.out.println("El modelo " + modelo.getNombre() + " no ha pasado la validación.");
+            }
+            // utilizamos el operador instaceeof para ver si esta en la lista
+        } else if (modelo instanceof ModeloArbolDecision) {
+            ModeloArbolDecision modeloArbolDecision = (ModeloArbolDecision) modelo;
+            // y utilizamos && para hacer la union de las condiciones
+            if (modeloArbolDecision.getProfundidadArbol() < 10 && modeloArbolDecision.getCantidadNodosHoja() > 5) {
+                System.out.println("El modelo " + modelo.getNombre() + " ha pasado la validación.");
+            } else {
+                System.out.println("El modelo " + modelo.getNombre() + " no ha pasado la validación.");
+            }
+        }
+    }
+}
