@@ -1,0 +1,43 @@
+//poner las librerias 
+
+#include <iostream>
+
+using namespace std;
+
+//crear la clase y darle un nombre
+
+class triangulo{
+    private:
+        int a;
+        int b; 
+    public:
+    
+        triangulo(int a,int b){
+            this->a = a;
+            this->b = b;
+        };
+        
+        float hipotenusa(){
+            return a*a+b*b;
+        };
+        
+        float perimetro(){
+            return (a*a+b*b)+a+b;
+        };
+        
+        
+};
+
+int main(){
+    int a;
+    cout<<"por favor digite el valor de la altura"<< endl;
+    cin>> a;
+    int b;
+    cout<<"por favor digite el valor de la base"<< endl;
+    cin>> b;
+    triangulo rectangulo(a,b);
+    cout<<"el valor de la Hipotenusa "<< rectangulo.hipotenusa()<<endl;
+    cout<<"el valor del Perimetro es "<< rectangulo.perimetro()<<endl;
+    cout<<"el valor de la Altuna es  "<< a<<endl;
+    
+}
