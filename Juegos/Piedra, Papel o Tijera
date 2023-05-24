@@ -1,0 +1,39 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int player1Score = 0;
+        int player2Score = 0;
+
+        while (player1Score < 2 && player2Score < 2) {
+            System.out.println("Jugador 1: Ingresa tu elección (piedra, papel o tijera):");
+            String player1Choice = scanner.nextLine().toLowerCase();
+
+            System.out.println("Jugador 2: Ingresa tu elección (piedra, papel o tijera):");
+            String player2Choice = scanner.nextLine().toLowerCase();
+
+            if (player1Choice.equals(player2Choice)) {
+                System.out.println("Es un empate.");
+            } else if (
+                    (player1Choice.equals("piedra") && player2Choice.equals("tijera")) ||
+                    (player1Choice.equals("tijera") && player2Choice.equals("papel")) ||
+                    (player1Choice.equals("papel") && player2Choice.equals("piedra"))
+            ) {
+                System.out.println("Jugador 1 gana la ronda.");
+                player1Score++;
+            } else {
+                System.out.println("Jugador 2 gana la ronda.");
+                player2Score++;
+            }
+        }
+
+        if (player1Score > player2Score) {
+            System.out.println("Jugador 1 ha ganado el juego.");
+        } else {
+            System.out.println("Jugador 2 ha ganado el juego.");
+        }
+
+        scanner.close();
+    }
+}
