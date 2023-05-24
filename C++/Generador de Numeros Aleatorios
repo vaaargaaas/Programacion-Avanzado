@@ -1,0 +1,24 @@
+*******************************************************************************/
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main() {
+    // Inicializar el generador de números aleatorios
+    srand(time(NULL));
+    
+    // Crear el arreglo y llenarlo con números aleatorios
+    int arreglo[10];
+    for (int i = 0; i < 10; i++) {
+        arreglo[i] = rand() % 26; // Generar un número aleatorio del 0 al 25
+    }
+    
+    // Crear el puntero y utilizarlo para imprimir el contenido del arreglo
+    int* p = arreglo;
+    for (int i = 0; i < 10; i++, p++) {
+        cout << *p << endl; // Imprimir el contenido del arreglo usando el puntero
+    }
+    
+    return 0;
+}
