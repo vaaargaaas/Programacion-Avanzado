@@ -1,0 +1,32 @@
+import java.util.Calendar;
+import java.util.Formatter;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
+class FormatoTiempo{
+  public static void main(String args[]){
+    //Formato de fecha
+    Formatter fecha = new Formatter();
+    Calendar cal = Calendar.getInstance();
+    fecha = new Formatter();
+    fecha.format("%tB %tb %tm", cal, cal, cal);
+    //Formayto hora
+    Date hora = new Date();
+    String strFormatoHora = "HH:mm:ss a";
+    SimpleDateFormat forma = new SimpleDateFormat(strFormatoHora);
+    //Se Imprime
+    System.out.print("Presentacion 1 de Fecha y Hora: ");
+    System.out.println(fecha + " " + forma.format(hora) + "\n");
+
+    //Otra Forma
+    fecha.format("%tc", cal);
+    System.out.print("Presentacion 2 de Fecha y Hora: ");
+    System.out.println(fecha + "\n");
+
+    //Otra Forma PREFERIDO
+    Date d = new Date();
+    System.out.print("Presentacion 3 de Fecha y Hora: ");
+    System.out.println(d.toString());
+      
+  }
+}
