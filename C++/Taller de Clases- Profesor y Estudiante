@@ -1,0 +1,61 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Persona {
+public:
+    Persona(string n, int e) {
+        nombre = n;
+        edad = e;
+    }
+    void presentarse() {
+        cout << "Hola, mi nombre es " << nombre << " y tengo " << edad << " años." << endl;
+    }
+protected:
+    string nombre;
+    int edad;
+};
+
+class Profesor : public Persona {
+public:
+    Profesor(string n, int e, string esp) : Persona(n, e) {
+        especialidad = esp;
+    }
+    string getEspecialidad() {
+        return especialidad;
+    }
+private:
+    string especialidad;
+};
+
+class Estudiante : public Persona {
+public:
+    Estudiante(string n, int e, int gr) : Persona(n, e) {
+        grado = gr;
+    }
+    bool puedeInscribirse() {
+        return grado >= 9;
+    }
+private:
+    int grado;
+};
+
+int main() {
+    Persona p("Juan", 30);
+    Profesor pro("Pedro", 40, "Matemáticas");
+    Estudiante e("María", 15, 9);
+    
+    p.presentarse();
+    pro.presentarse();
+    cout << "Soy profesor de " << pro.getEspecialidad() << "." << endl;
+    e.presentarse();
+    if (e.puedeInscribirse()) {
+        cout << "El estudiante " << e.nombre << " puede inscribirse en el curso de programación." << endl;
+    } else {
+        cout << "El estudiante " << e.nombre << " no puede inscribirse en el curso de programación." << endl;
+    }
+    
+    return 0;
+}
+
