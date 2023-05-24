@@ -1,0 +1,86 @@
+*******************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define MAX_VALOR 20
+
+typedef struct {
+    int* conjunto;
+    int tamano;
+} ConjuntoNumeros;
+
+int generarNumeroAleatorio(int maxValor) {
+    return rand() % (maxValor + 1);
+}
+
+void generarConjuntoNumeros(ConjuntoNumeros* conjunto) {
+    int i;
+    srand(time(NULL)); // Inicializar la semilla para generar números aleatorios
+    for (i = 0; i < conjunto->tamano; i++) {
+        conjunto->conjunto[i] = generarNumeroAleatorio(MAX_VALOR);
+    }
+}
+
+void mostrarConjuntoNumeros(ConjuntoNumeros conjunto) {
+    int i;
+    printf("Conjunto de numeros generados:\n");
+    for (i = 0; i < conjunto.tamano; i++) {
+        printf("%d ", conjunto.conjunto[i]);
+    }
+    printf("\n");
+}
+
+void mostrarHistograma(ConjuntoNumeros conjunto) {
+    int i, j, conteo;
+    printf("Histograma:\n");
+    for (i = 0; i <= MAX_VALOR; i++) {
+        conteo = 0;
+        for (j = 0; j < conjunto.tamano; j++) {
+            if (conjunto.conjunto[j] == i) {
+                conteo++;
+            }
+        }
+        printf("%2d: ", i);
+        for (j = 0; j < conteo; j++) {
+            printf("*");
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int opcion;
+    ConjuntoNumeros conjunto;
+    conjunto.tamano = 10;
+    conjunto.conjunto = (int*)malloc(conjunto.tamano * sizeof(int));
+    do {
+        printf("Menu:\n");
+        printf("1. Generar conjunto de numeros aleatorios.\n");
+        printf("2. Mostrar conjunto de numeros.\n");
+        printf("3. Mostrar histograma.\n");
+        printf("0. Salir.\n");
+        printf("Ingrese una opcion: ");
+        scanf("%d", &opcion);
+        switch (opcion) {
+            case 1:
+                generarConjuntoNumeros(&conjunto);
+                printf("Conjunto de numeros generado.\n");
+                break;
+            case 2:
+                mostrarConjuntoNumeros(conjunto);
+                break;
+            case 3:
+                mostrarHistograma(conjunto);
+                break;
+            case 0:
+                printf("Gracias por utilizar el Programa \n");
+                break;
+            default:
+                printf("Opcion invalida.\n");
+                break;
+        }
+    } while (opcion != 0);
+    free(conjunto.conjunto);
+    return 0;
+}
