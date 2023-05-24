@@ -1,0 +1,48 @@
+public class  Cliente {
+    private String tipo;
+    private double valorObra;
+    private String tipoObra;
+
+    public Cliente(String tipo, double valorObra, String tipoObra) {
+        this.tipo = tipo;
+        this.valorObra = valorObra;
+        this.tipoObra = tipoObra;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public double getValorObra() {
+        return valorObra;
+    }
+
+    public String getTipoObra() {
+        return tipoObra;
+    }
+}
+
+public class EmpresaGestionObras {
+    private String nombre;
+
+    public EmpresaGestionObras(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void gestionarObra(Cliente cliente) {
+        // Código para gestionar la obra según los datos del cliente
+        System.out.println("La obra del cliente " + cliente.getTipo() + " con un valor de " + cliente.getValorObra() + " y tipo de obra " + cliente.getTipoObra() + " ha sido gestionada.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Cliente cliente1 = new Cliente("natural", 50000, "construcción");
+        Cliente cliente2 = new Cliente("empresarial", 100000, "manufacturera");
+
+        EmpresaGestionObras empresa = new EmpresaGestionObras("Gestión Obras S.A.");
+
+        empresa.gestionarObra(cliente1);
+        empresa.gestionarObra(cliente2);
+    }
+}
