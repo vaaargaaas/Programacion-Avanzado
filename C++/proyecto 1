@@ -1,0 +1,335 @@
+/*Tema: PROYECTO NUMERO 1- REGISTROS DE EMPLEADOS
+Autores: Paula Galindo, Andres Useche, Erick Vargas
+Fecha de inicio del proyecto: 24-02-2023 
+Fecha de culminacion del proyecto: 8-03-2023*/
+
+//Se crean las bibliotecas que nos permitiran desarrollar el programa
+#include <cstdlib>
+#include <iostream>
+#include <cmath>
+#include <vector>
+#include <fstream>
+//Se crea el dominio de la biblioteca "GLOBAL"
+using namespace std;
+// Iniciación de la estructura  Empleado
+struct Empleado {
+    int codigo_numerico;
+    char nombre[30];
+    char apellido[30];
+    int celular;
+};
+
+
+//función creada para registrar los empleados en el fichero binario
+void Registrar_Empleado(){
+  
+    //se crea la instancia de la clase fstrem (ofstream) para escribir en el fichero
+    ofstream fichero_entrada;
+  //se abre el fichero 
+    fichero_entrada.open("fichero_empleado.bin",ios::binary|ios::app);
+    Empleado empleado; //contiene la información de empleado
+  //si el fichero abre correctamente, ejecutar
+    if(fichero_entrada.is_open()){
+      //se almacena los datos de los empleados en la estructura 
+        cout << "Ingrese el codigo del Empleado: " << endl;
+        cin >> empleado.codigo_numerico;
+        cout << "Ingrese el nombre del Empleado: " << endl;
+        cin >> empleado.nombre;
+        cout << "Ingrese el apellido del Empleado: " << endl;
+        cin >> empleado.apellido;
+        cout << "Ingrese el numero del Empleado: " << endl;
+        cin >> empleado.celular;
+        cout << "\n";
+        //se utiliza write para escribir los datos en el archivo binario 
+        fichero_entrada.write((char*)&empleado, sizeof(Empleado));
+        
+    }
+  //se cierra el fichero de escritura
+    fichero_entrada.close();
+};
+
+// Función para verificar si el empleado ya se encuentra registrado , se leen los datos del archivo 
+//y si al recorrer se encuentra una coicidencia lo reporta como encontrado
+bool Agregar_Empleado(int codigo/*Se crea una variable de tipo entero que se usara mas adelante*/) {  
+  //Se abre el fichero de lectura para que la funcion tenga los datos
+    ifstream fichero_entrada("fichero_empleado.bin", ios::binary);
+    Empleado empleado;
+  // Se crea una variable de tipo true or false
+    bool encontrado = false;
+  //Sr crea un buble para leer el fichero
+    while (fichero_entrada.read((char*)&empleado, sizeof(Empleado))) {
+      // En el caso de que el codigo de un empleado ya este registrado se parara el programa y le pedira que lo registre nuevamente
+        if (empleado.codigo_numerico == codigo) {
+            encontrado = true;
+            break;
+        }
+    }
+    //se cierra el fichero de lectura
+    fichero_entrada.close();
+    return encontrado;
+}
+//Funcion para mostrar y imprimir los empleados registrados
+void mostarempleados(){
+    //se crea la instancia de la clase fstream (ifstream)
+     ifstream fichero_entrada;
+     //abrir el archivo binario
+     fichero_entrada.open("fichero_empleado.bin",ios::binary);
+     Empleado empleado;
+     //se leen los los datos del archivo 
+     fichero_entrada.read((char*)&empleado, sizeof(Empleado));
+     //Se ejecuta un buble para imprimir los datos del archivo
+     do{
+        cout << "Codigo:" << empleado.codigo_numerico<< endl;
+        cout << "Nombre:" << empleado.nombre << endl;
+        cout << "Apellido:" << empleado.apellido << endl;
+        cout << "Celular:" << empleado.celular << endl;
+        cout<<"\n";
+        fichero_entrada.read((char*)&empleado, sizeof(Empleado));
+
+        //eof esto lo que hace es detectar si ya se está al final del archivo 
+     //El do while se da mientras no estemos al final del archivo 
+     }while(!fichero_entrada.eof()); 
+     
+    
+}
+// Funcion para cambiar el numero celular de un empleado
+void cambiarNumeroEmpleado() {
+// se crea una variable para guardar el codigo del empleado al que se le quiere cambiar el numero celular
+    int codigo;
+    cout << "Ingrese el codigo del Empleado: " << endl;
+    cin >> codigo;
+
+    // Abrir el archivo en modo lectura y escritura
+    fstream fichero("fichero_empleado.bin", ios::in | ios::out | ios::binary);
+
+    Empleado empleado;
+    bool encontrado = false; 
+    //se lee el archivo
+    while (fichero.read((char*)&empleado, sizeof(Empleado))) { 
+  // Se compara el código del empleado con el código ingresado por el usuario
+  //Si se encuentra el empleado, mostrara su información y modificara su número de celular
+        if (empleado.codigo_numerico == codigo) {
+            encontrado = true;
+            cout << "Empleado encontrado:" << endl;
+            cout << "Codigo: " << empleado.codigo_numerico << endl;
+            cout << "Nombre: " << empleado.nombre << endl;
+            cout << "Apellido: " << empleado.apellido << endl;
+            cout << "Celular actual: " << empleado.celular << endl;
+            cout << "Ingrese el nuevo numero de celular: " << endl;
+            cin >> empleado.celular;
+
+            // Volver al archivo y sobrescribirlo con el celular modificado
+            fichero.write((char*)&empleado, sizeof(Empleado));
+            
+            cout << "El número de celular ha sido cambiado correctamente." << endl;
+            break;
+        }
+    }
+// En el caso en donde el codigo del empleado no se encontrara en el fichero, se imprime que no se encontro el empleado
+    if(!encontrado) {
+        cout << "No se encontró ningún empleado con ese código." << endl;
+    }
+
+    // Cerrar el archivo
+    fichero.close();
+}
+// Funcion para despedir a un empleado
+void despedirEmpleado()
+{
+  // se crea una variable para guardar el codigo del empleado al que se quiere despedir
+    int codigo;
+    cout << "Ingrese el codigo del empleado que desea despedir: " << endl;
+    cin >> codigo;
+
+    // Se inicializa el archivo de lectura
+    ifstream fichero_entrada("fichero_empleado.bin", ios::binary);
+
+    Empleado empleado;
+    bool encontrado = false;
+ // Se lee el archivo
+    while (fichero_entrada.read((char *)&empleado, sizeof(Empleado)))
+    {
+      // Se compara el código del empleado con el código ingresado por el usuario
+        if (empleado.codigo_numerico == codigo)
+        {
+            encontrado = true;
+            break;
+        }
+    }
+
+    fichero_entrada.close();
+// Si se encontro el empleado, se procedera a despedirlo y eliminarlo del registro de empleados
+    if (encontrado)
+    {
+        // Guardar temporalmente la informacion del empleado que se quiere despedir
+        Empleado empleado_despedido = empleado;
+
+        // Eliminar al empleado del archivo binario
+        ifstream fichero_entrada("fichero_empleado.bin", ios::binary);
+        ofstream fichero_salida("temp.bin", ios::binary);
+
+        while (fichero_entrada.read((char *)&empleado, sizeof(Empleado)))
+        {
+            if (empleado.codigo_numerico != codigo)
+            {
+                fichero_salida.write((char *)&empleado, sizeof(Empleado));
+            }
+        }
+
+        fichero_entrada.close();
+        fichero_salida.close();
+// Se remueve y se reescribe los ficheros// aclararrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+        remove("fichero_empleado.bin");
+        rename("temp.bin", "fichero_empleado.bin");
+
+        // Generar la carta de despido usando la informacion del empleado despedido y almacenarlo en un fichero de escritura
+        string nombre_archivo = "Carta_Despido_" + string(empleado_despedido.nombre) + ".txt";
+        ofstream carta(nombre_archivo);
+        carta << "Estimado/a " << empleado_despedido.nombre << "," << endl;
+        carta << "Lamentamos informarte que ha sido despedido/a de Minosaurios Tech." << endl;
+        carta.close();
+        cout <<"\n"; 
+        cout << "Empleado " << empleado_despedido.nombre << " ha sido despedido." << endl;
+        cout <<"\n";
+
+        // Guardar la información del empleado despedido en un fichero para registrar los empleados despedidos
+        ofstream fichero_despedidos("despedidos.bin", ios::binary | ios::app);
+      // ACLARARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+        fichero_despedidos.write((char *)&empleado_despedido, sizeof(Empleado));
+        fichero_despedidos.close();
+    }
+      //De lo contrario, se imprime que no se encontro el empleado
+    else
+    {
+        cout << "No se encontro el empleado con codigo " << codigo << "." << endl;
+    }
+}
+
+//Se crea una funcion para imprimir los empleados despedidos
+void mostrarEmpleadosDespedidos()
+{
+  //se inicializa el fichero de lectura para los empleados despedidos
+    ifstream fichero_despedidos("despedidos.bin", ios::binary);
+
+    Empleado empleado;
+// Se crea un bucle para imprimir y mostrar los empleados despedidos 
+    while (fichero_despedidos.read((char *)&empleado, sizeof(Empleado)))
+    {
+        cout << "Empleado encontrado:" << endl;
+        cout << "Codigo: " << empleado.codigo_numerico << endl;
+        cout << "Nombre: " << empleado.nombre << endl;
+        cout << "Apellido: " << empleado.apellido << endl;
+        cout << "Celular: " << empleado.celular << endl;
+        cout<<"\n";
+    }
+//se cierra el fichero
+    fichero_despedidos.close();
+}
+
+// Se crea la función principal
+int main(){
+    cout <<"------------------------------------------------------------"<< endl;
+    cout <<"\n";
+    cout << "----   BIENVENIDO AL PROGRAMA DE GESTION DE EMPLEADOS   ---- " << endl;
+    //Declaracion de variables
+    int i,k,j, respuesta; // int:numeros char:letras
+    int acunt, aux=0;
+    bool bandera= true; // condicion
+    Empleado empleado;
+  
+        cout <<"------------------------------------------------------------"<< endl;
+        cout <<"\n";
+        cout <<"-----------------      MENU PRINCIPAL      -----------------"<< endl;   
+        cout <<"\n";
+        cout <<"------------------------------------------------------------"<< endl;
+        cout <<"\n";
+        cout <<"------------------------------------------------------------"<< endl;
+    //Menu de Presentacion de opciones al usuario: bucle
+    
+        cout << "A continuacion encontrara un menu, con opciones del 1 al 7. "<< endl;
+  while(bandera){
+        cout << "Por favor seleccione el numero de la opción que quiere ejecutar:  "<< endl;
+        cout <<"\n";
+        cout << "Opción 1:Registar Empleado. "<< endl;
+        cout << "Opción 2:Agregar nuevos empleados. "<< endl;
+        cout << "Opción 3:Mostrar Empleados Registrados."<< endl;
+        cout << "Opción 4:Cambiar numero telefonico del empleado. "<< endl;
+        cout << "Opción 5:Despedir a un Empleado. "<< endl;
+        cout << "Opción 6:Mostrar empleados que han sido despedidos."<<endl;
+        cout << "Opción 7:Salir del Programa. "<< endl;
+        cout <<"\n";
+        cout<< "Opción selecccionada: ";
+        cin >>k; //Pidiendo por pantalla una variable 
+        cout <<"\n";
+      
+    
+        switch(k){  //dependiendo el valor de k nos da las siguintes funciones
+            case 1:
+                cout<< "¿Cuantos empleados desea Registar?  "<< endl;
+            
+                cin >> acunt;
+                while(aux<acunt){
+                 for(i=0; i<acunt;i++){
+                 cout<<"Empleado ["<<i+1<<"] " ;
+                 
+                    Registrar_Empleado();
+                    aux++;
+
+                   cout<<"Empleado/s registrado exitosamente"<<endl;
+                   cout <<"\n";
+                 }
+                    
+                }
+                break;
+            case 2:// se pregunta el número de empleados y con el contador se agrega a la variable para que los vaya acumulando
+                cout << "¿Cuantos nuevos empleados desea registar?  " << endl;
+                cin >> acunt;
+            for (int i = 0; i < acunt; i++) {
+                //Se piden y guardan los datos del nuevo empleado
+            Empleado empleado;
+            cout << "Ingrese el codigo del Empleado ["<<i+1<<"]: " << endl;
+            cin >> empleado.codigo_numerico;
+            if (Agregar_Empleado(empleado.codigo_numerico)) {
+            cout << "El empleado ya está registrado, intentelo de nuevo" << endl;
+            cout <<"Ingrese el código del empleado: "<<endl;
+            cin>> empleado.codigo_numerico;}
+            cout << "Ingrese el nombre del Empleado: " << endl;
+            cin >> empleado.nombre;
+            cout << "Ingrese el apellido del Empleado: " << endl;
+            cin >> empleado.apellido;
+            cout << "Ingrese el numero del Empleado: " << endl;
+            cin >> empleado.celular;
+            cout<<"Empleado agregado exitosamente";
+            cout <<"\n";
+              //Se guardan los datos en el fichero
+            ofstream fichero_salida("fichero_empleado.bin", ios::binary | ios::app);
+            fichero_salida.write((char*)&empleado, sizeof(Empleado));
+            fichero_salida.close();
+
+          
+    }
+    break; //Llamar todas las funciones 
+            case 3:
+                mostarempleados();
+                break;
+            case 4:
+            cambiarNumeroEmpleado();
+                break;
+            case 5:
+            despedirEmpleado();	
+                break;
+            case 6:
+            mostrarEmpleadosDespedidos();
+                break;
+          case 7://si el condicional es falso se sale del menú y abre los archivos 
+          bandera=false;
+                cout <<"\n";
+                cout<<"---      EL PROGRAMA HA TERMINADO CON EXITO ---"<< endl;
+                
+                break;
+            
+    
+          }
+      }
+return 0;
+}
