@@ -1,0 +1,46 @@
+*******************************************************************************/
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+struct Cliente {
+    string nombre;
+    string direccion;
+    string telefono;
+    float totalFactura;
+};
+
+void capturarDatosCliente(Cliente* cliente) {
+    cout << "Ingrese el nombre del cliente: ";
+    getline(cin, cliente->nombre);
+    cout << "Ingrese la direccion del cliente: ";
+    getline(cin, cliente->direccion);
+    cout << "Ingrese el telefono del cliente: ";
+    getline(cin, cliente->telefono);
+    cliente->totalFactura = 0.0;
+}
+
+void imprimirFactura(Cliente* cliente) {
+    ofstream archivo("factura.txt", ios::app);
+    if (archivo.is_open()) {
+        archivo << "Cliente: " << cliente->nombre << endl;
+        archivo << "Direccion: " << cliente->direccion << endl;
+        archivo << "Telefono: " << cliente->telefono << endl;
+        archivo << "Total a pagar: $" << cliente->totalFactura << endl << endl;
+        archivo.close();
+    }
+}
+
+int main() {
+    Cliente cliente;
+    
+    capturarDatosCliente(&cliente);
+    
+    // Aquí se pueden hacer cálculos de la factura
+    cout << "Ingresa valor:"<<endl;
+    cin>>cliente.totalFactura;
+    
+    imprimirFactura(&cliente);
+    
+    return 0;
+}
