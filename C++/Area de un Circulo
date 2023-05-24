@@ -1,0 +1,57 @@
+//poner las librerias 
+
+#include <iostream>
+
+using namespace std;
+
+//crear la clase y darle un nombre
+
+class Circulo{
+
+// poner en private lo que el publico no necesita saber    
+    
+    private:
+        int radio;
+        
+// poner en public los datos que el usuario necesita saber        
+        
+    public: 
+
+// creamos el constructor y le damos la variable, se pone el this para que sepa el objetivo del constructor
+
+        Circulo(int radio){
+            this->radio = radio;
+        }
+
+// se ponen las funciones con sus respectivas acciones
+    
+        float area(){
+            return 3.1614* radio* radio;
+        }
+        
+        float perimetro(){
+            return 3.1614* 2* radio;
+        }
+        
+        float diametro(){
+            return radio+radio;
+        }
+    
+// se termina la funcion 
+    
+};
+
+// se hace la funcion principal
+
+int main(){
+    // se pide el parametro
+    int radio;
+    cout<<"por favor digite el valor del radio"<< endl;
+    cin>> radio;
+    // se nombra la clase, se le da una variable y despues el parametro 
+    Circulo circulo(radio);
+    // se exponen los datos y se dice que tiene que hacer
+    cout<<"el valor del area es "<< circulo.area()<<endl;
+    cout<<"el valor del perimetro es "<< circulo.perimetro()<<endl;
+    cout<<"el valor del diametro es  "<< circulo.diametro()<<endl;
+}
